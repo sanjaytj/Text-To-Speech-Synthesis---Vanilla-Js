@@ -10,6 +10,14 @@ const rateValue = document.querySelector('#rate-value');
 const pitch = document.querySelector('#pitch');
 const pitchValue = document.querySelector('#pitch-value');
 
+
+//Browser identifier
+// Firefox 1.0+
+var isFirefox = typeof InstallTrigger !== 'undefined';
+
+// Chrome 1+
+var isChrome = !!window.chrome && !!window.chrome.webstore;
+
 //Initialize voices array (from api)
 let voices = [];
 
@@ -32,9 +40,19 @@ const getVoices = () => {
     });
 };
 
-getVoices(); //currently returns empty array
-if(synth.onvoiceschanged !== undefined){
-    synth.onvoiceschanged = getVoices;
+// getVoices(); //currently returns empty array
+// if(synth.onvoiceschanged !== undefined){
+//     synth.onvoiceschanged = getVoices;
+// }
+
+//Fix for duplication, run code depending on the browser
+if (isFirefox) {
+    getVoices();
+}
+if (isChrome) {
+    if (synth.onvoiceschanged !== undefined) {
+        synth.onvoiceschanged = getVoices;
+    }
 }
 
 //speak
@@ -47,14 +65,19 @@ const speak = () => {
     //check if not a empty string
     if(textInput.value != '') 
     {
+        // Add background animation
+        body.style.background = '#141414 url(img/wave.gif)';
+        body.style.backgroundRepeat = 'repeat-x';
+        body.style.backgroundSize = '100% 100%';
+
         //get speak text
         const speakText = new SpeechSynthesisUtterance(textInput.value);
 
         //speak end
-        speakText.onend = e => 
-        {
+        speakText.onend = e => {
             console.log('Done speaking...');
-        }
+            body.style.background = '#141414';
+          };
 
         //speak error
         speakText.onerror = e => {
@@ -90,14 +113,10 @@ textForm.addEventListener('submit', e => {
 });
 
 //rate value change
-rate.addEventListener('change', e => {
-    rateValue.textContent = rate.value
-});
+rate.addEventListener('change', e => (rateValue.textContent = rate.value));
 
 //pitch value change
-pitch.addEventListener('change', e => {
-    pitchValue.textContent = pitch.value
-});
+pitch.addEventListener('change', e => (pitchValue.textContent = pitch.value));
 
 //voice select - speak automactically when voice changed 
 voiceSelect.addEventListener('change', e => speak());
