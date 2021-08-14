@@ -21,7 +21,7 @@
                 <form >
                     <div class="form-group"> <!-- This is for the text area where you type anything -->
                         <textarea name="" id="text-input" class="form-control form-control-lg" placeholder="Type anything..."></textarea>
-                    </div>
+                    </div><br>
                     <div class="form-group"> <!--This is for the speed rate slider-->
 
                         <label for="rate">Rate</label>
@@ -29,16 +29,16 @@
                         <!--displays what ever Js echoes here as the rate of speed-->
 
                         <input type="range" id="rate" class="custom-range" min="0.5" max="2" value="1" step="0.1"> <!--custom-range will give the blue circle for the slider & value which is the default value is set to 1 & step = each increment-->
-                    </div>
+                    </div><br>
                     <div class="form-group"> 
                         <label for="pitch">Pitch</label>
                         <div id="pitch-value" class="badge badge-primary float-right">1</div> 
                         <input type="range" id="pitch" class="custom-range" min="0" max="2" value="1" step="0.1"> 
-                    </div>
+                    </div><br>
                     <div class="form-group">
                         <select id="voice-select" class="form-control form-control-lg"></select> 
                         <!--We are fetching the list of voices from an API and form control large to make it loog better-->
-                    </div>
+                    </div><br>
                     <button class="btn btn-light btn-lg btn-block">Speak</button> 
                     <!--13.30-->
                 </form>
